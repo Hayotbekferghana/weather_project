@@ -6,9 +6,9 @@ class CachedWeatherItemFields {
     id, temperature, addressName, weatherType,
   ];
   static const String id = "_id";
-  static const String temperature = "news_title";
-  static const String addressName = "news_image";
-  static const String weatherType = "created_at";
+  static const String temperature = "temperature";
+  static const String addressName = "address_name";
+  static const String weatherType = "weather_type";
 
   static fromJson(Map<String, dynamic> data) {}
 }
