@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weather_project/presentations/tabBox/home_page.dart';
-import 'package:weather_project/presentations/tabBox/sql_page.dart';
-import 'package:weather_project/presentations/tabBox/tab_box.dart';
+import 'package:weather_project/presentations/tab/home_page.dart';
+import 'package:weather_project/presentations/tab/sql_page.dart';
+import 'package:weather_project/presentations/tab/tab_box.dart';
 import 'package:weather_project/utils/constants.dart';
 
 class MyRouter {

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:weather_project/data/local/local_db.dart';
 import 'package:weather_project/data/models/cached_weather_info/cached_weather_item.dart';
 import 'package:weather_project/data/services/local_notification_service.dart';
-import 'package:weather_project/presentations/tabBox/home_page.dart';
-import 'package:weather_project/presentations/tabBox/sql_page.dart';
+import 'package:weather_project/presentations/tab/home_page.dart';
+import 'package:weather_project/presentations/tab/sql_page.dart';
 
 class TabBox extends StatefulWidget {
   const TabBox({Key? key}) : super(key: key);
