@@ -36,14 +36,13 @@ class LocalDatabase {
       ${CachedWeatherItemFields.id} $idType,
       ${CachedWeatherItemFields.addressName} $textType,
       ${CachedWeatherItemFields.weatherType} $textType,
-      ${CachedWeatherItemFields.temperature} $intType
+      ${CachedWeatherItemFields.temperature} $textType
     ) 
     """);
   }
   //***************************************Cached Weather Table************************************************ */
 
-  static Future<CachedWeatherItem> insertCachedWeather(
-      CachedWeatherItem cachedWeatherItem) async {
+  static Future<CachedWeatherItem> insertCachedWeather(CachedWeatherItem cachedWeatherItem) async {
     final db = await localDatabase.database;
     final id = await db.insert(weatherTable, cachedWeatherItem.toJson());
     return cachedWeatherItem.copyWith(id: id);
@@ -53,8 +52,6 @@ class LocalDatabase {
     final db = await localDatabase.database;
     const orderBy = "${CachedWeatherItemFields.id} DESC";
     final result = await db.query(weatherTable, orderBy: orderBy);
-    return result
-        .map((weather) => CachedWeatherItem.fromJson(weather))
-        .toList();
+    return result.map((weather) => CachedWeatherItem.fromJson(weather)).toList();
   }
 }

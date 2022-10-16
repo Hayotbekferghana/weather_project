@@ -1,21 +1,25 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_project/presentations/tabBox/tab_box.dart';
+import 'package:weather_project/data/services/local_notification_service.dart';
+import 'package:weather_project/presentations/router.dart';
+import 'package:weather_project/utils/constants.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  LocalNotificationService.localNotificationService.init();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        debugShowCheckedModeBanner: false,
-        home: const TabBox());
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: tabRoute,
+      onGenerateRoute: MyRouter.generateRoute,
+    );
   }
 }
