@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
       if (remoteMessage != null) {
         debugPrint("O TERMINATED: ${remoteMessage.notification!.title}");
         saveNotificationAndShowLocal(remoteMessage);
-        // Navigator.pushNamed(context, v.data["route"]);
+        Navigator.pushNamed(context, remoteMessage.data["route"]);
       }
     });
   }

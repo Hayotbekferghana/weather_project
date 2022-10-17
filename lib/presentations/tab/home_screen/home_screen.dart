@@ -114,40 +114,42 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (_) => AlertDialog(
               content: StatefulBuilder(
                 builder: (context, setState) {
-                  return SizedBox(
-                    height: 200,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        CustomTextField(
-                            controller: addressController,
-                            hintText: "Address",
-                            context: context),
-                        CustomTextField(
-                          controller: tempController,
-                          hintText: "Temperature",
-                          context: context,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text("Weather type"),
-                            DropdownButton(
-                              value: weatherType,
-                              items: weatherTypes.map((String item) {
-                                return DropdownMenuItem(
-                                  value: item,
-                                  child: Text(item),
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                weatherType = value!;
-                                setState(() {});
-                              },
-                            ),
-                          ],
-                        )
-                      ],
+                  return SingleChildScrollView(
+                    child: SizedBox(
+                      height: 200,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CustomTextField(
+                              controller: addressController,
+                              hintText: "Address",
+                              context: context),
+                          CustomTextField(
+                            controller: tempController,
+                            hintText: "Temperature",
+                            context: context,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Weather type"),
+                              DropdownButton(
+                                value: weatherType,
+                                items: weatherTypes.map((String item) {
+                                  return DropdownMenuItem(
+                                    value: item,
+                                    child: Text(item),
+                                  );
+                                }).toList(),
+                                onChanged: (String? value) {
+                                  weatherType = value!;
+                                  setState(() {});
+                                },
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   );
                 },

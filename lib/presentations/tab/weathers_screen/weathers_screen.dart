@@ -98,7 +98,15 @@ class _WeathersScreenState extends State<WeathersScreen> {
                 itemCount: weathers.length,
                 itemBuilder: (context, index) {
                   CachedWeatherItem weatherItem = weathers[index];
-                  return FadeInLeftBig(
+                  return index.isEven? FadeInLeftBig(
+                    child: CustomContainer(
+                      height: height,
+                      width: width,
+                      temp: weatherItem.temperature,
+                      country: weatherItem.addressName,
+                      statusWeather: weatherItem.weatherType,
+                    ),
+                  ):FadeInRightBig(
                     child: CustomContainer(
                       height: height,
                       width: width,
