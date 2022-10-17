@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_project/presentations/widgets/custom_paint.dart';
-import 'package:weather_project/utils/images.dart';
+import 'package:weather_project/utils/icons.dart';
 
 class CustomContainer extends StatefulWidget {
   const CustomContainer({
@@ -30,13 +30,13 @@ class _CustomContainerState extends State<CustomContainer>
   @override
   void initState() {
     controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2))
+        AnimationController(vsync: this, duration: const Duration(seconds: 1))
           ..addListener(() {
             setState(() {});
           });
     colorAnimation = ColorTween(
-      begin: const Color.fromARGB(255, 79, 47, 159).withOpacity(1),
-      end: const Color.fromARGB(255, 29, 20, 91).withOpacity(1),
+      begin: const Color.fromARGB(255, 122, 69, 255).withOpacity(1),
+      end: const Color.fromARGB(255, 22, 7, 119).withOpacity(1),
     ).animate(controller);
     colorAnimation1 = ColorTween(
       begin: const Color(0xff392C88).withOpacity(1),
@@ -44,6 +44,12 @@ class _CustomContainerState extends State<CustomContainer>
     ).animate(controller);
     controller.repeat(reverse: true);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -101,14 +107,14 @@ class _CustomContainerState extends State<CustomContainer>
                   SizedBox(
                     child: Image.asset(
                       (widget.statusWeather == "tornado")
-                          ? MyImages.tornado
+                          ? MyIcons.tornado
                           : (widget.statusWeather == "sunny")
-                              ? MyImages.sunWithRain
+                              ? MyIcons.sunWithRain
                               : (widget.statusWeather == "rainy")
-                                  ? MyImages.moonWithCloud
+                                  ? MyIcons.moonWithCloud
                                   : (widget.statusWeather == "cloudly")
-                                      ? MyImages.bigMoon
-                                      : MyImages.sunWithCloud,
+                                      ? MyIcons.bigMoon
+                                      : MyIcons.sunWithCloud,
                       height: widget.height * 0.13,
                       width: widget.width * 0.25,
                       fit: BoxFit.fill,

@@ -29,7 +29,6 @@ class LocalDatabase {
   Future _createDB(Database db, int version) async {
     const String idType = "INTEGER PRIMARY KEY AUTOINCREMENT";
     const String textType = "TEXT NOT NULL";
-    const String intType = "INTEGER DEFAULT 0";
 
     await db.execute("""
     CREATE TABLE $weatherTable (
@@ -42,7 +41,8 @@ class LocalDatabase {
   }
   //***************************************Cached Weather Table************************************************ */
 
-  static Future<CachedWeatherItem> insertCachedWeather(CachedWeatherItem cachedWeatherItem) async {
+  static Future<CachedWeatherItem> insertCachedWeather(
+      CachedWeatherItem cachedWeatherItem) async {
     final db = await localDatabase.database;
     final id = await db.insert(weatherTable, cachedWeatherItem.toJson());
     return cachedWeatherItem.copyWith(id: id);
@@ -52,6 +52,13 @@ class LocalDatabase {
     final db = await localDatabase.database;
     const orderBy = "${CachedWeatherItemFields.id} DESC";
     final result = await db.query(weatherTable, orderBy: orderBy);
-    return result.map((weather) => CachedWeatherItem.fromJson(weather)).toList();
+    return result
+        .map((weather) => CachedWeatherItem.fromJson(weather))
+        .toList();
+  }
+
+  static Future<int> deleteAllWeathers() async {
+    final db = await localDatabase.database;
+    return await db.delete(weatherTable);
   }
 }
