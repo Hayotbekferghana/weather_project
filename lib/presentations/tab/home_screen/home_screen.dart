@@ -112,62 +112,67 @@ class _HomeScreenState extends State<HomeScreen> {
           showDialog(
             context: context,
             builder: (_) => AlertDialog(
-              content: SingleChildScrollView(
-                child: SizedBox(
-                  height: 200,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CustomTextField(
-                          controller: addressController,
-                          hintText: "Address",
-                          context: context),
-                      CustomTextField(
-                        controller: tempController,
-                        hintText: "Temperature",
-                        context: context,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Weather type"),
-                          DropdownButton(
-                            value: weatherType,
-                            items: weatherTypes.map((String item) {
-                              return DropdownMenuItem(
-                                value: item,
-                                child: Text(item),
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              weatherType = value!;
-                              setState(() {});
-                            },
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
+              content: StatefulBuilder(
+                builder: (context, setState) {
+                  return SizedBox(
+                    height: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CustomTextField(
+                            controller: addressController,
+                            hintText: "Address",
+                            context: context),
+                        CustomTextField(
+                          controller: tempController,
+                          hintText: "Temperature",
+                          context: context,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Weather type"),
+                            DropdownButton(
+                              value: weatherType,
+                              items: weatherTypes.map((String item) {
+                                return DropdownMenuItem(
+                                  value: item,
+                                  child: Text(item),
+                                );
+                              }).toList(),
+                              onChanged: (String? value) {
+                                weatherType = value!;
+                                setState(() {});
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                },
               ),
               actions: [
                 TextButton(
-                    onPressed: () async {
-                      if (addressController.text.isNotEmpty &&
-                          tempController.text.isNotEmpty) {
-                        context.read<NotificationCubit>().postNotification(
-                              address: addressController.text,
-                              weatherType: weatherType,
-                              temp: tempController.text,
-                            );
-                      }
-                      addressController.clear();
-                      tempController.clear();
-                      Navigator.pop(context);
-                    },
-                    child: const Center(
-                      child: Text("Add"),
-                    ))
+                  onPressed: () async {
+                    if (addressController.text.isNotEmpty &&
+                        tempController.text.isNotEmpty &&
+                        weatherType.isNotEmpty) {
+                      context.read<NotificationCubit>().postNotification(
+                            address: addressController.text,
+                            weatherType: weatherType,
+                            temp: tempController.text,
+                          );
+                    }
+                    addressController.clear();
+                    tempController.clear();
+                    weatherType = 'sunny';
+                    Navigator.pop(context);
+                  },
+                  child: const Center(
+                    child: Text("Add"),
+                  ),
+                ),
               ],
             ),
           );

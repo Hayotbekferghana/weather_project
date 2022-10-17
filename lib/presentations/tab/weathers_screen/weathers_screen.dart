@@ -32,7 +32,48 @@ class _WeathersScreenState extends State<WeathersScreen> {
         actions: [
           IconButton(
               onPressed: () async {
-                context.read<NotificationCubit>().deleteAllWeathers();
+                showDialog(
+                  context: context,
+                  builder: (context) => StatefulBuilder(
+                    builder: (context, setState) => AlertDialog(
+                      content: const SizedBox(
+                        height: 50,
+                        child: Center(
+                          child: Text("Are you sure delete  all weathers"),
+                        ),
+                      ),
+                      actions: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            TextButton(
+                              onPressed: () async {
+                                context
+                                    .read<NotificationCubit>()
+                                    .deleteAllWeathers();
+                                Navigator.pop(context);
+                              },
+                              child: const Center(
+                                child: Text(
+                                  "Yes",
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Center(
+                                child: Text("No"),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
               },
               icon: const Icon(
                 Icons.delete,

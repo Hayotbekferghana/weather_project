@@ -13,10 +13,7 @@ class TabBox extends StatefulWidget {
 class _TabBoxState extends State<TabBox> {
   int currentIndex = 0;
 
-  List<Widget> screens = [
-    HomeScreen(),
-    const WeathersScreen(),
-  ];
+  List<Widget> screens = const [HomeScreen(), WeathersScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

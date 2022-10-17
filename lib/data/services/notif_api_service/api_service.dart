@@ -34,9 +34,8 @@ class ApiService {
           }
         },
       );
-      if (response.data['success'] != 0) {
-        print(response.data);
-        debugPrint("SUCCESS = ${response.data['success']}");
+      if (response.data['message_id'] != null) {
+        debugPrint(response.data);
         return true;
       } else {
         throw Exception();
