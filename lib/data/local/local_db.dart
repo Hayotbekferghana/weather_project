@@ -61,4 +61,14 @@ class LocalDatabase {
     final db = await localDatabase.database;
     return await db.delete(weatherTable);
   }
+  static Future<int> deleteWeatherById(int id) async {
+    final db = await localDatabase.database;
+    var t = await db
+        .delete(weatherTable, where: "${CachedWeatherItemFields.id}=?", whereArgs: [id]);
+    if (t > 0) {
+      return t;
+    } else {
+      return -1;
+    }
+  }
 }

@@ -5,6 +5,7 @@ import 'package:weather_project/cubit/notification_cubit/notification_cubit.dart
 import 'package:weather_project/presentations/tab/home_screen/widgets/custom_text_field.dart';
 
 import 'package:weather_project/utils/icons.dart';
+import 'package:weather_project/utils/utility_functions.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -156,6 +157,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               actions: [
                 TextButton(
+                  style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.blue)),
                   onPressed: () async {
                     if (addressController.text.isNotEmpty &&
                         tempController.text.isNotEmpty &&
@@ -165,14 +168,22 @@ class _HomeScreenState extends State<HomeScreen> {
                             weatherType: weatherType,
                             temp: tempController.text,
                           );
+                      Navigator.pop(context);
+                    } else {
+                      MyUtils.getMyToast(
+                          message: "Barcha maydonlarni to'ldiring");
                     }
                     addressController.clear();
                     tempController.clear();
                     weatherType = 'sunny';
-                    Navigator.pop(context);
                   },
                   child: const Center(
-                    child: Text("Add"),
+                    child: Text(
+                      "Add",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ],

@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_project/data/local/local_db.dart';
 import 'package:weather_project/data/models/cached_weather_info/cached_weather_item.dart';
 import 'package:weather_project/data/repositories/notif_api_repository.dart';
+
 
 part 'notification_state.dart';
 
@@ -20,6 +22,14 @@ class NotificationCubit extends Cubit<NotificationState> {
       emit(NotificationInSuccess(weathers: weathers));
     } catch (error) {
       emit(NotificationInFailure(errorText: error.toString()));
+    }
+  }
+
+  void deleteWeatherById(int id) async {
+    try {
+      await LocalDatabase.deleteWeatherById(id);
+    } catch (e) {
+      emit(NotificationInFailure(errorText: e.toString()));
     }
   }
 

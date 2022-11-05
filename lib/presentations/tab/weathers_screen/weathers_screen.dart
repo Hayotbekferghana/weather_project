@@ -1,6 +1,8 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:weather_project/cubit/notification_cubit/notification_cubit.dart';
 import 'package:weather_project/data/models/cached_weather_info/cached_weather_item.dart';
@@ -15,7 +17,36 @@ class WeathersScreen extends StatefulWidget {
   State<WeathersScreen> createState() => _WeathersScreenState();
 }
 
-class _WeathersScreenState extends State<WeathersScreen> {
+class _WeathersScreenState extends State<WeathersScreen>
+    with TickerProviderStateMixin {
+  late final AnimationController controller;
+  late final Animation colorAnimation;
+  late final Animation colorAnimation1;
+  @override
+  void initState() {
+    controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1))
+          ..addListener(() {
+            setState(() {});
+          });
+    colorAnimation = ColorTween(
+      begin: const Color.fromARGB(255, 122, 69, 255).withOpacity(1),
+      end: const Color.fromARGB(255, 22, 7, 119).withOpacity(1),
+    ).animate(controller);
+    colorAnimation1 = ColorTween(
+      begin: const Color(0xff392C88).withOpacity(1),
+      end: const Color(0xff5835B2).withOpacity(1),
+    ).animate(controller);
+    controller.repeat(reverse: true);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -24,7 +55,7 @@ class _WeathersScreenState extends State<WeathersScreen> {
     return Scaffold(
       backgroundColor: MyColors.backGroundColor,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
         title: const Text("Weathers"),
         centerTitle: true,
         backgroundColor: MyColors.backGroundColor,
@@ -98,21 +129,29 @@ class _WeathersScreenState extends State<WeathersScreen> {
                 itemCount: weathers.length,
                 itemBuilder: (context, index) {
                   CachedWeatherItem weatherItem = weathers[index];
-                  return index.isEven? FadeInLeftBig(
-                    child: CustomContainer(
-                      height: height,
-                      width: width,
-                      temp: weatherItem.temperature,
-                      country: weatherItem.addressName,
-                      statusWeather: weatherItem.weatherType,
-                    ),
-                  ):FadeInRightBig(
-                    child: CustomContainer(
-                      height: height,
-                      width: width,
-                      temp: weatherItem.temperature,
-                      country: weatherItem.addressName,
-                      statusWeather: weatherItem.weatherType,
+                  return BounceInLeft(
+                    duration: const Duration(seconds: 2),
+                    child: Slidable(
+                      key: const ValueKey(0),
+                      startActionPane: ActionPane(
+                        dismissible: DismissiblePane(onDismissed: () async {
+                          context
+                              .read<NotificationCubit>()
+                              .deleteWeatherById(weatherItem.id!);
+                          context.read<NotificationCubit>().getAllWeathers();
+                        }),
+                        motion: const ScrollMotion(),
+                        children: const [],
+                      ),
+                      child: CustomContainer(
+                        height: height,
+                        width: width,
+                        temp: weatherItem.temperature,
+                        country: weatherItem.addressName,
+                        statusWeather: weatherItem.weatherType,
+                        color1: colorAnimation.value,
+                        color2: colorAnimation1.value,
+                      ),
                     ),
                   );
                 },
